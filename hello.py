@@ -1,1 +1,2 @@
-print('hola desde mi maquina')
+print('hola' == 'hola')
+print('hola' is 'hola')

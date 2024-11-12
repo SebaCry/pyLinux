@@ -12,7 +12,8 @@ python3 game.py
 ```sh
 git clone
 cd app
-source my-env/bin/activate
+source my-env/bin/activate AQUI DEPENDE, PORQUE TENGO DIFERENTES NOMBRES DE ENTORNO DE DESARROLLO AJJAJAJAJA
 pip3 install -r requeriments.txt
 python3 main.py
+
 ```  
