@@ -1,0 +1,7 @@
+services:
+  app-csv:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app ##Aqui este volumes, sirve para poder hacer cambios en mi archivo y verlos en tiempo real
