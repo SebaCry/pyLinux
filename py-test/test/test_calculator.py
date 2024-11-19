@@ -13,6 +13,6 @@ class CalculatorTests(unittest.TestCase):
         assert multiply(10, 34) == 340
 
     def test_division(self):
-        result = division(10,0)
+        result = division(10,2)
         expected = 5
         assert result == expected
