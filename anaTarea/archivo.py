@@ -60,8 +60,8 @@ def GraficosCiudad(dataframe):
             opciones = int(input('''Escoge entre estas opciones:
             1. – Bogotá\n
             2. – Medellín\n
-            3. – Cali: \n 
-            4. Menu principal'''))
+            3. – Cali\n
+            4. – Menu principal: '''))
 
             if opciones == 1:
                 dataframe_ciudad = dataframe[dataframe['ciudad'].str.lower() == 'bogotá']
@@ -70,17 +70,22 @@ def GraficosCiudad(dataframe):
             elif opciones == 3:
                 dataframe_ciudad = dataframe[dataframe['ciudad'].str.lower() == 'cali']
             elif opciones == 4:
-                MenuOpciones()
+                print("Volviendo al menú principal.")
+                return
             else:
-                 print('Ingresa un digito correcto')
-                 continue
+                print('Ingresa un número correcto')
+                continue
 
-            dataframe_compras = dataframe_ciudad[(dataframe_ciudad['compras'] > 0) & (dataframe_ciudad['comprasonline'] > 0)]
-            if not dataframe_compras.empty:
-                Graficas(dataframe_compras)
+            if dataframe_ciudad.empty:
+                print(f'No hay datos para la ciudad seleccionada.')
             else:
-                print('No hay datos para las condiciones especificadas.')
+                dataframe_compras = dataframe_ciudad[(dataframe_ciudad['compras'] > 0) & (dataframe_ciudad['comprasonline'] > 0)]
                 
+                if not dataframe_compras.empty:
+                    Graficas(dataframe_compras)
+                else:
+                    print(f"No hay datos suficientes para generar gráficas para {dataframe_ciudad['ciudad'].iloc[0]}.")
+
         except ValueError as error:
             print(f'Ingresaste un dato incorrecto: {error}, vuelve a ingresar un dato')
             continue
