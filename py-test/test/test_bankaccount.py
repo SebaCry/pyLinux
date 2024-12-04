@@ -1,5 +1,7 @@
 import unittest, os
 from src.bank_account import BankAccount
+from unittest.mock import patch, Mock
+from src.exceptions import WithdrawalTimeRestrictonError
 
 class BankAccountTests(unittest.TestCase):
 
@@ -52,5 +54,15 @@ class BankAccountTests(unittest.TestCase):
         with open(self.account.log_file, 'r') as f:
             log_content = f.read()
         self.assertIn('Intento fallido de transferencia', log_content) 
-         
+    
+    @patch('src.bank_account.datetime')
+    def test_withdraw_during_bussines_hours(self, mock_datetime):
+        mock_datetime.now.return_value.hour = 10
+        new_balance = self.account.withdraw(100)
+        self.assertEqual(new_balance, 900)
 
+    @patch('src.bank_account.datetime')
+    def test_withdraw_disallow_before_bussines_hours(self, mock_datetime):
+        mock_datetime.now.return_value.hour = 7
+        with self.assertRaises(WithdrawalTimeRestrictonError):
+            self.account.withdraw(100)
