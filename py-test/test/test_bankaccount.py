@@ -63,6 +63,19 @@ class BankAccountTests(unittest.TestCase):
 
     @patch('src.bank_account.datetime')
     def test_withdraw_disallow_before_bussines_hours(self, mock_datetime):
-        mock_datetime.now.return_value.hour = 7
+        mock_datetime.now.return_value.hour = 19
         with self.assertRaises(WithdrawalTimeRestrictonError):
             self.account.withdraw(100)
+
+    def test_deposite_varios_ammounts(self):
+        test_cases = [
+            {'ammount' : 100, "expected" : 1100},
+            {'ammount' : 3000, "expected" : 4000},
+            {'ammount' : 4500, "expected" : 5500},
+        ]
+
+        for case in test_cases:
+            with self.subTest(case=test_cases):
+                self.account = BankAccount(balance=1000, log_file='transaction.txt')
+                new_balance = self.account.deposite(case['ammount'])
+                self.assertEqual(new_balance, case['expected'])
