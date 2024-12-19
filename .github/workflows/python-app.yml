@@ -28,7 +28,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     
     - name: Run tests
-      env:
-        PYTHONPATH: ${{ github.workspace }}
       run: |
-        python -m unittest discover -s py-test/test -v
+        cd py-test
+        export PYTHONPATH="${PYTHONPATH}:${PWD}"
+        python -m unittest discover -s test -v
